@@ -190,7 +190,7 @@ impl DeepNeuralNetwork {
         let m = y.shape()[1] as f32;
         let cost = -(1.0 / m)
             * (y.dot(&al.clone().reversed_axes().log())
-                + (1.0 - y).dot(&(1.0 - al).reversed_axes().log()));
+            + (1.0 - y).dot(&(1.0 - al).reversed_axes().log()));
 
         cost.sum()
     }

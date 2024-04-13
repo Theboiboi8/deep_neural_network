@@ -1,6 +1,3 @@
-use crate::data::{array_from_dataframe, dataframe_from_csv, write_parameters_to_json_file};
-use crate::neural_network::DeepNeuralNetwork;
-
 mod data;
 mod neural_network;
 
@@ -11,15 +8,15 @@ fn main() {
     let iterations = 10000;
 
     let (training_data, training_labels) =
-        dataframe_from_csv("data/training_set.csv".into()).unwrap();
-    let (test_data, test_labels) = dataframe_from_csv("data/test_set.csv".into()).unwrap();
+        data::dataframe_from_csv("data/training_set.csv".into()).unwrap();
+    let (test_data, test_labels) = data::dataframe_from_csv("data/test_set.csv".into()).unwrap();
 
-    let training_data_array = array_from_dataframe(&training_data) / 255.0;
-    let training_labels_array = array_from_dataframe(&training_labels);
-    let test_data_array = array_from_dataframe(&test_data) / 255.0;
-    let test_labels_array = array_from_dataframe(&test_labels);
+    let training_data_array = data::array_from_dataframe(&training_data) / 255.0;
+    let training_labels_array = data::array_from_dataframe(&training_labels);
+    let test_data_array = data::array_from_dataframe(&test_data) / 255.0;
+    let test_labels_array = data::array_from_dataframe(&test_labels);
 
-    let model = DeepNeuralNetwork {
+    let model = neural_network::DeepNeuralNetwork {
         layers: neural_network_layers,
         learning_rate,
     };
@@ -33,7 +30,7 @@ fn main() {
         iterations,
         model.learning_rate,
     );
-    write_parameters_to_json_file(&parameters, "model.json".into());
+    data::write_parameters_to_json_file(&parameters, "model.json".into());
 
     let training_predictions = model.predict(&training_data_array, &parameters);
     println!(
