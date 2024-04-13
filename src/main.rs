@@ -2,7 +2,6 @@ mod data;
 mod neural_network;
 
 fn main() {
-    std::env::set_var("RUST_BACKTRACE", "1");
     let neural_network_layers: Vec<usize> = vec![12288, 20, 7, 5, 1];
     let learning_rate = 0.025;
     let iterations = 10000;
